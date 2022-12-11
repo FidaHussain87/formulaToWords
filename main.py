@@ -36,6 +36,7 @@ numbers = {
     70: 'Seventy',
     80: 'Eighty',
     90: 'Ninety',
+    100:"Hundred",
     0: 'Zero'
 }
 
@@ -44,8 +45,13 @@ numbers = {
 
 def convertNumber2Word(n):
     n = int(n)
+    #### try block inorder to catch an error if number doesn't exist in numbers dictionary.
     try:
         return ""+numbers[n]
+    
+    #### except block incase if we are catching the error in above try block as a KeyError, let say if we insert the number other than integer, i.e a,b,c....z
+    #in that case we don't want to break the code but to catch that error and return just false, if we have any number which is not in numbers array like 100,101,
+    # then it will return false in except block having Error type as KeyError
     except KeyError:
         try:
             return ""+numbers[n - n % 10] + numbers[n % 10].lower()
@@ -60,34 +66,50 @@ def convertNumber2Word(n):
 # and getting repsective operators with index
 
 def main():
-    output = ''
-    result = ""
+  output = ''
+  result = ""
+  number=''
 
-    try:
-        ### getting input from user i.e 2+3*(2+4)-4/2 as a string
-        formula = input("Please enter your math formula to solve?")
-        #### using eval built-in method to take math formula as a string and give an output as a final result
-        answer = eval(formula)
-        ### converting the answer number into words
-        result = convertNumber2Word(answer)
-        ### using loop to iterate over each number into string formula
-        for i in formula:
-            if i.isdigit() and i is not None:
-                output = output+convertNumber2Word(i)+" "
-            elif i == "(":
-                output = output+"("+" "
-            elif i == ")":
-                output = output+")" + " "
-            else:
-                output = output + operators[i]+" "
-        if not result:
-            print('Number out of range')
+  try:
+    ### getting input from user i.e 2+3*(2+4)-4/2 as a string
+    formula = input("Please enter your math formula to solve?")
+    #### using eval built-in method to take math formula as a string and give an output as a final result
+    answer = eval(formula)
+    #while loop inorder to ask the user to input formula if the result exceeds 100
+    while answer>100:
+      formula = input("Please enter your math formula to solve?")
+      answer = eval(formula)
+    ### converting the answer number into words
+    result = convertNumber2Word(answer)
+    ### using loop to iterate over each number into string formula
+    for i in formula:
+        if i == "(":
+            output = output+"("+" "
+        elif i == ")":
+            output=output+convertNumber2Word(number)+" "
+            number=""
+            output = output+")" + " "
+        elif i in operators:
+            if number !='':
+              output=output+convertNumber2Word(number)+" "
+
+            output = output + operators[i]+" "
+            number=''
         else:
-
-            print(output+" "+operators["="]+" "+str(result))
-    except Exception as e:
-        print(e)
+          number=number+i
+    if not result:
+        print('Number out of range')
+    else:
+        output = output + convertNumber2Word(number)
+        print(output+" "+operators["="]+" "+str(result))
+  except Exception as e:
+    print(e)
 
 
 #### calling the main method ############
 main()
+
+
+
+
+
