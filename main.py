@@ -1,4 +1,4 @@
-#### this dictionary has operators as key and their translation into words as value pair
+# this dictionary has operators as key and their translation into words as value pair
 operators = {
     "+": "plus",
     "-": "minus",
@@ -7,7 +7,7 @@ operators = {
     "=": "equals to"
 }
 
-##### this numbers array has digits as key and translation into words a value pair
+# this numbers array has digits as key and translation into words a value pair
 numbers = {
     1: 'One',
     2: 'Two',
@@ -36,21 +36,21 @@ numbers = {
     70: 'Seventy',
     80: 'Eighty',
     90: 'Ninety',
-    100:"Hundred",
+    100: "Hundred",
     0: 'Zero'
 }
 
 
-#### this function is used to convert any number between 0-90 into words,
+# this function is used to convert any number between 0-90 into words,
 
 def convertNumber2Word(n):
     n = int(n)
-    #### try block inorder to catch an error if number doesn't exist in numbers dictionary.
+    # try block inorder to catch an error if number doesn't exist in numbers dictionary.
     try:
         return ""+numbers[n]
-    
-    #### except block incase if we are catching the error in above try block as a KeyError, let say if we insert the number other than integer, i.e a,b,c....z
-    #in that case we don't want to break the code but to catch that error and return just false, if we have any number which is not in numbers array like 100,101,
+
+    # except block incase if we are catching the error in above try block as a KeyError, let say if we insert the number other than integer, i.e a,b,c....z
+    # in that case we don't want to break the code but to catch that error and return just false, if we have any number which is not in numbers array like 100,101,
     # then it will return false in except block having Error type as KeyError
     except KeyError:
         try:
@@ -62,26 +62,26 @@ def convertNumber2Word(n):
 # In this method we are supposed to take an input math formula based on numbers as a string from user between
 # 0-9, and operators as given in operators dictionary above, and then we are looping over the string formula,
 # and checking if it's digit operator or small brackets, based on each condition we are saving result into output variable,
-#while parsing numbers into  above function convertNumber2Word to get translation, 
+# while parsing numbers into  above function convertNumber2Word to get translation,
 # and getting repsective operators with index
 
-def main():
+def problemSolve():
   output = ''
   result = ""
   number=''
 
   try:
-    ### getting input from user i.e 2+3*(2+4)-4/2 as a string
+    # getting input from user i.e 2+3*(2+4)-4/2 as a string
     formula = input("Please enter your math formula to solve?")
-    #### using eval built-in method to take math formula as a string and give an output as a final result
+    # using eval built-in method to take math formula as a string and give an output as a final result
     answer = eval(formula)
-    #while loop inorder to ask the user to input formula if the result exceeds 100
+    # while loop inorder to ask the user to input formula if the result exceeds 100
     while answer>100:
-      formula = input("Please enter your math formula to solve?")
+      formula = input("Opps! the result is larger number, Please enter your math formula to solve?")
       answer = eval(formula)
-    ### converting the answer number into words
+    # converting the answer number into words
     result = convertNumber2Word(answer)
-    ### using loop to iterate over each number into string formula
+    # using loop to iterate over each number into string formula
     for i in formula:
         if i == "(":
             output = output+"("+" "
@@ -104,6 +104,12 @@ def main():
         print(output+" "+operators["="]+" "+str(result))
   except Exception as e:
     print(e)
+
+
+#### main method to call the problemSolve method until the user is not closing program forcibly ctrl+C
+def main():
+  while True:
+    problemSolve()
 
 
 #### calling the main method ############
